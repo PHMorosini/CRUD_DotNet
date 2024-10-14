@@ -1,0 +1,46 @@
+﻿@model Cliente
+
+@{
+    ViewData["Title"] = "Atualizar Cliente";
+}
+
+<h2>Atualizar Cliente</h2>
+
+<form asp-action="Update" asp-route-id="@Model.Id" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Nome" class="control-label"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Endereco" class="control-label"></label>
+        <input asp-for="Endereco" class="form-control" />
+        <span asp-validation-for="Endereco" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Rua" class="control-label"></label>
+        <input asp-for="Rua" class="form-control"/>
+        <span asp-validation-for="Rua" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Bairro" class="control-label"></label>
+        <input asp-for="Bairro" class="form-control" />
+        <span asp-validation-for="Bairro" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Atualizar" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

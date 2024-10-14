@@ -1,0 +1,52 @@
+﻿@model ClientesListViewModel
+
+@{
+    ViewData["Title"] = "Lista de Clientes";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Rua</th>
+            <th>Bairro</th>
+            <th>Editar</th>
+            <th>Deletar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cliente in Model.Clientes)
+        {
+            <tr>
+                <td>@cliente.Id</td>
+                <td>@cliente.Nome</td>
+                <td>@cliente.Endereco</td>
+                <td>@cliente.Rua</td>
+                <td>@cliente.Bairro</td>
+                <td>
+                    <a class="nav-link text-dark" 
+                       asp-area="" 
+                       asp-controller="Clientes" 
+                       asp-action="Update" 
+                       asp-route-id="@cliente.Id">
+                        <i class="bi bi-amd"></i>
+                    </a>
+                </td>
+                <td>
+                    <a class="nav-link text-dark"
+                       asp-area=""
+                       asp-controller="Clientes"
+                       asp-action="Delete"
+                       asp-route-id="@cliente.Id">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+        <button><a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Create">Criar cliente</a></button>
+    </tbody>
+</table>
