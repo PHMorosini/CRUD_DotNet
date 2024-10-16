@@ -11,7 +11,7 @@ namespace CRUD_DotNet.Models
         public string Endereco { get; set; }
         public string Rua { get; set; }
         public string Bairro { get; set; }
-
+        public virtual ICollection<Evento> Eventos { get; set; } = new List<Evento>();
         public Cliente(string nome, string endereco, string rua, string bairro)
         {
 

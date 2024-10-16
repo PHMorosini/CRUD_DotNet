@@ -3,6 +3,7 @@ using CRUD_DotNet.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUD_DotNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241015184659_Alter table evento")]
+    partial class Altertableevento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,30 +53,6 @@ namespace CRUD_DotNet.Migrations
                     b.ToTable("Clientes");
                 });
 
-            modelBuilder.Entity("CRUD_DotNet.Models.Estados", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sigla")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Estados");
-                });
-
             modelBuilder.Entity("CRUD_DotNet.Models.Evento", b =>
                 {
                     b.Property<int>("Id")
@@ -97,12 +76,9 @@ namespace CRUD_DotNet.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EstadoSigla")
+                    b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("EventoId")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -112,8 +88,6 @@ namespace CRUD_DotNet.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EstadoSigla");
 
                     b.ToTable("Eventos");
                 });
@@ -162,18 +136,6 @@ namespace CRUD_DotNet.Migrations
                     b.ToTable("ClienteEvento");
                 });
 
-            modelBuilder.Entity("CRUD_DotNet.Models.Evento", b =>
-                {
-                    b.HasOne("CRUD_DotNet.Models.Estados", "Estado")
-                        .WithMany("Eventos")
-                        .HasForeignKey("EstadoSigla")
-                        .HasPrincipalKey("Sigla")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estado");
-                });
-
             modelBuilder.Entity("ClienteEvento", b =>
                 {
                     b.HasOne("CRUD_DotNet.Models.Cliente", null)
@@ -187,11 +149,6 @@ namespace CRUD_DotNet.Migrations
                         .HasForeignKey("EventosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CRUD_DotNet.Models.Estados", b =>
-                {
-                    b.Navigation("Eventos");
                 });
 #pragma warning restore 612, 618
         }

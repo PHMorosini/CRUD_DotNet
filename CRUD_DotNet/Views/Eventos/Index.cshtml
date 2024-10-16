@@ -1,0 +1,49 @@
+﻿@model EventosListViewModel
+
+@{
+    ViewData["Title"] = "Lista de Eventos";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table id="eventosTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Ativo</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evento in Model.Eventos)
+        {
+            <tr>
+                <td>@evento.Id</td>
+                <td>@evento.Nome</td>
+                <td>@evento.Endereco</td>
+                <td>@evento.Bairro</td>
+                <td>@evento.Cidade</td>
+                <td>
+                    <input type="checkbox" class="form-check-input" id="Ativo_@evento.Id" @(evento.Ativo ? "checked" : "") onchange="atualizarAtivo(@evento.Id, this.checked)">
+                </td>
+                <td>
+                    <a class="nav-link text-dark"
+                       asp-area=""
+                       asp-controller="Eventos"
+                       asp-action="Update"
+                       asp-route-id="@evento.Id">
+                        <i class="bi bi-amd"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button><a class="nav-link text-dark" asp-area="" asp-controller="Eventos" asp-action="Create">Criar evento</a></button>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Eventos.js"></script>
