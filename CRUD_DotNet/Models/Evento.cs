@@ -16,12 +16,12 @@ namespace CRUD_DotNet.Models
         [Required]
         public string Cidade { get; set; }
         [Required]
-        public int EventoId { get; set; } // Chave primária do Evento
-        public string EstadoSigla { get; set; } // Coluna para armazenar a sigla do Estado
+        public string EstadoSigla { get; set; }
         [DisplayName("Valor do ingresso")]
         public decimal ValorIngresso { get; set; }
         public bool Ativo { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+
         public Estado Estado { get; set; }
     }
 }

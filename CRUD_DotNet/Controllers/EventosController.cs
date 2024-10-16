@@ -1,5 +1,6 @@
 ﻿using CRUD_DotNet.Context;
 using CRUD_DotNet.Models;
+using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,11 @@ namespace CRUD_DotNet.Controllers
     public class EventosController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public EventosController(ApplicationDbContext context) 
+        private readonly IEstadoServices _estadoServices;
+        public EventosController(ApplicationDbContext context,IEstadoServices estadoServices) 
         {
             _context = context;
+            _estadoServices = estadoServices;
         }
         public IActionResult Index()
         {
@@ -33,6 +36,9 @@ namespace CRUD_DotNet.Controllers
         [HttpPost]
         public IActionResult Create(Evento evento)
         {
+            var estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
+
             if (ModelState.IsValid)
             {
                 _context.Eventos.Add(evento);

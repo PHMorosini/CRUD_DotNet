@@ -1,6 +1,8 @@
 using CRUD_DotNet.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
+using CRUD_DotNet.Services;
+using CRUD_DotNet.Services.Interfaces;
 
 namespace CRUD_DotNet
 {
@@ -15,6 +17,11 @@ namespace CRUD_DotNet
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
+
+
+            //Adicionar os servicos aqui em baixo
+
+            builder.Services.AddScoped<IEstadoServices,EstadoServices >();
 
             var app = builder.Build();
 
