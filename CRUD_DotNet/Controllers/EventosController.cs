@@ -1,5 +1,6 @@
 ﻿using CRUD_DotNet.Context;
 using CRUD_DotNet.Models;
+using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +9,23 @@ namespace CRUD_DotNet.Controllers
     public class EventosController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public EventosController(ApplicationDbContext context) 
+        private readonly IEstadoServices _estadoServices;
+        public EventosController(ApplicationDbContext context,IEstadoServices estadoServices) 
         {
             _context = context;
+            _estadoServices = estadoServices;
         }
         public IActionResult Index()
         {
+            IEnumerable<Estado> estados;
             IEnumerable<Evento> eventos;
             eventos = _context.Eventos.ToList();
+            estados = _estadoServices.GetEstados();
 
             EventosListViewModel eventosListViewModel = new EventosListViewModel
             {
                 Eventos = eventos,
+                //Estados = estados,
             };
             return View(eventosListViewModel);
         }
@@ -27,6 +33,8 @@ namespace CRUD_DotNet.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
             return View();
         }
 
@@ -35,8 +43,10 @@ namespace CRUD_DotNet.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Eventos.Add(evento);
                 _context.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View(evento);

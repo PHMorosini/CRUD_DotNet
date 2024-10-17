@@ -2,7 +2,7 @@
 
 namespace CRUD_DotNet.Models
 {
-    public class Estado 
+    public class Estado
     {
         [Key]
         public int Id { get; set; }
