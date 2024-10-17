@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CRUD_DotNet.Models
 {
@@ -22,6 +23,13 @@ namespace CRUD_DotNet.Models
         public bool Ativo { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 
-        public Estado Estado { get; set; }
+        //Isso aqui é pra sempre que criar o evento vir como true o campo Ativo,tentei fazer pelo entityconfig mas não foi.
+        public Evento()
+        {
+            Ativo = true;
+        }
+
+
+
     }
 }

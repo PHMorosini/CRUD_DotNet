@@ -15,12 +15,13 @@ namespace CRUD_DotNet.Context
         public DbSet<Estado> Estados { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        { 
+
             modelBuilder.Entity<Evento>()
-                .HasOne(e => e.Estado)
-                .WithMany(es => es.Eventos)
-                .HasForeignKey(e => e.EstadoSigla)
-                .HasPrincipalKey(es => es.Sigla);
+                .Property(e => e.Ativo)
+                .HasDefaultValue(true);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
    

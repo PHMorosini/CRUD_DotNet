@@ -17,12 +17,15 @@ namespace CRUD_DotNet.Controllers
         }
         public IActionResult Index()
         {
+            IEnumerable<Estado> estados;
             IEnumerable<Evento> eventos;
             eventos = _context.Eventos.ToList();
+            estados = _estadoServices.GetEstados();
 
             EventosListViewModel eventosListViewModel = new EventosListViewModel
             {
                 Eventos = eventos,
+                //Estados = estados,
             };
             return View(eventosListViewModel);
         }
@@ -30,19 +33,20 @@ namespace CRUD_DotNet.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Evento evento)
         {
-            var estados = _estadoServices.GetEstados();
-            ViewBag.Estados = estados;
-
             if (ModelState.IsValid)
             {
+                
                 _context.Eventos.Add(evento);
                 _context.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View(evento);

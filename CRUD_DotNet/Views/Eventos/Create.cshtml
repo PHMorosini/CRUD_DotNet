@@ -32,13 +32,13 @@
     </div>
     <div class="form-group">
         <label>Estado:</label>
-        <select id="estado" name="estadoId" class="form-control">
+        <select id="EstadoSigla" name="EstadoSigla" class="form-control">
             <option value="">-- Selecione um Estado --</option>
             @if (estadosViewBag != null)
             {
                 foreach (var estado in estadosViewBag)
                 {
-                    <option value="@estado.Id">@estado.Sigla</option>
+                    <option value="@estado.Sigla">@estado.Nome</option>
                 }
             }
         </select>
