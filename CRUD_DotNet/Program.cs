@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using CRUD_DotNet.Services;
 using CRUD_DotNet.Services.Interfaces;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace CRUD_DotNet
 {
@@ -11,6 +13,15 @@ namespace CRUD_DotNet
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var defaultCulture = new CultureInfo("pt-BR");
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultCulture),
+                SupportedCultures = new List<CultureInfo> { defaultCulture },
+                SupportedUICultures = new List<CultureInfo> { defaultCulture }
+            };
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             // Add services to the container.
@@ -24,6 +35,7 @@ namespace CRUD_DotNet
             builder.Services.AddScoped<IEstadoServices,EstadoServices >();
 
             var app = builder.Build();
+            app.UseRequestLocalization(localizationOptions);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

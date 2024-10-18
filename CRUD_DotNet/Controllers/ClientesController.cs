@@ -1,21 +1,32 @@
 ﻿using CRUD_DotNet.Context;
 using CRUD_DotNet.Models;
+using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using static CRUD_DotNet.Controllers.EventosController;
 
 namespace CRUD_DotNet.Controllers
 {
     public class ClientesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ClientesController(ApplicationDbContext context) 
+        private readonly IEstadoServices _estadoServices;
+
+
+
+        public ClientesController(ApplicationDbContext context, IEstadoServices estadoServices)
         {
+            _estadoServices = estadoServices;
             _context = context;
+
+
         }
         public IActionResult Index()
         {
             IEnumerable<Cliente> clientes;
+           
             clientes = _context.Clientes.ToList();
+            
 
             ClientesListViewModel clienteListViewModel = new ClientesListViewModel 
             {
@@ -26,6 +37,9 @@ namespace CRUD_DotNet.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            IEnumerable<Estado> estados;
+            estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
             return View();
         }
 
@@ -36,14 +50,19 @@ namespace CRUD_DotNet.Controllers
             {
                 _context.Clientes.Add(cliente);
                 _context.SaveChanges();
+                return RedirectToAction("Index");
             }
 
             return View(cliente);
         }
 
-        [HttpGet("Update/{id}")]
+        [HttpGet]
         public IActionResult Update(int id)
         {
+            IEnumerable<Estado> estados;
+            estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
+
             var cliente = _context.Clientes.Find(id);
             if (cliente == null)
             {
@@ -52,7 +71,7 @@ namespace CRUD_DotNet.Controllers
             return View(cliente);
         }
 
-        [HttpPost("Update/{id}")]
+        [HttpPost]
         public IActionResult Update(int id, Cliente cliente)
         {
             if (ModelState.IsValid)
@@ -64,28 +83,49 @@ namespace CRUD_DotNet.Controllers
             return View(cliente);
         }
 
-        [HttpGet("Delete/{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost]
+        public IActionResult UpdateAtivo(int id, [FromBody] AtivoViewModel model)
         {
-            var cliente = _context.Clientes.Find(id);
-            return View(cliente);
-        }
-
-        [HttpPost("Delete/{id}")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            var cliente = _context.Clientes.Find(id);
-            if (cliente == null)
+            if (ModelState.IsValid)
             {
-                return View("Error", new ErrorViewModel());
+                var cliente = _context.Clientes.Find(id);
+                if (cliente != null)
+                {
+                    cliente.Ativo = model.Ativo;
+                    _context.SaveChanges();
+                    return Ok();
+                }
+                return NotFound();
             }
-
-            _context.Remove(cliente);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
+            return BadRequest();
         }
 
+        //[HttpGet("Delete/{id}")]
+        //public IActionResult Delete(int id)
+        //{
+        //    var cliente = _context.Clientes.Find(id);
+        //    return View(cliente);
+        //}
+
+        //[HttpPost("Delete/{id}")]
+        //public IActionResult DeleteConfirmed(int id)
+        //{
+        //    var cliente = _context.Clientes.Find(id);
+        //    if (cliente == null)
+        //    {
+        //        return View("Error", new ErrorViewModel());
+        //    }
+
+        //    _context.Remove(cliente);
+        //    _context.SaveChanges();
+
+        //    return RedirectToAction("Index");
+        //}
+
+        public class AtivoViewModel
+        {
+            public bool Ativo { get; set; }
+        }
 
 
 

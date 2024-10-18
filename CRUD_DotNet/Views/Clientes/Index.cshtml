@@ -14,8 +14,10 @@
         <th>Endereço</th>
         <th>Rua</th>
         <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Estado</th>
+        <th>Ativo</th>
         <th>Editar</th>
-        <th>Deletar</th>
     </tr>
     </thead>
     <tbody>
@@ -27,6 +29,11 @@
             <td>@cliente.Endereco</td>
             <td>@cliente.Rua</td>
             <td>@cliente.Bairro</td>
+            <td>@cliente.Cidade</td>
+            <td>@cliente.EstadoSigla</td>
+            <td>
+                    <input type="checkbox" class="form-check-input" id="Ativo_@cliente.Id" @(cliente.Ativo ? "checked" : "") onchange="atualizarAtivo(@cliente.Id, this.checked)">
+            </td>
             <td>
                 <a class="nav-link text-dark" 
                    asp-area="" 
@@ -36,15 +43,6 @@
                     <i class="bi bi-amd"></i>
                 </a>
             </td>
-            <td>
-                <a class="nav-link text-dark"
-                   asp-area=""
-                   asp-controller="Clientes"
-                   asp-action="Delete"
-                   asp-route-id="@cliente.Id">
-                    <i class="bi bi-trash"></i>
-                </a>
-            </td>
         </tr>
     }
     </tbody>
@@ -52,4 +50,4 @@
 
 <button><a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Create">Criar cliente</a></button>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="~/js/ClientesDataTables.js"></script>
+<script src="~/js/Clientes.js"></script>

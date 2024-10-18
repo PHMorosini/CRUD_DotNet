@@ -4,6 +4,7 @@ using CRUD_DotNet.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUD_DotNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017171631_AddColumn_EstadoSigla_OnClienteTable")]
+    partial class AddColumn_EstadoSigla_OnClienteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,10 +39,6 @@ namespace CRUD_DotNet.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cidade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -3,6 +3,7 @@ using CRUD_DotNet.Models;
 using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace CRUD_DotNet.Controllers
 {
@@ -39,8 +40,13 @@ namespace CRUD_DotNet.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Evento evento)
+        public IActionResult Create(Evento evento, string valorIngresso)
         {
+
+            if (!Decimal.TryParse(valorIngresso, NumberStyles.Currency, CultureInfo.GetCultureInfo("pt-BR"), out decimal Preco))
+            {
+                ModelState.AddModelError("valorIngresso", "O valor do ingresso não é valido ");
+            }
             if (ModelState.IsValid)
             {
                 
@@ -49,6 +55,37 @@ namespace CRUD_DotNet.Controllers
                 return RedirectToAction("Index");
             }
 
+            return View(evento);
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
+
+            var evento = _context.Eventos.Find(id);
+            if (evento == null)
+            {
+                return NotFound();
+            }
+            return View(evento);
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id,Evento evento, string valorIngresso)
+        {
+            if (!Decimal.TryParse(valorIngresso, out decimal Preco))
+            {
+                ModelState.AddModelError("valorIngresso", "O valor do ingresso não é valido ");
+            }
+            if (ModelState.IsValid)
+            {
+                evento.ValorIngresso = Preco;
+                _context.Update(evento); ;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View(evento);
         }
 

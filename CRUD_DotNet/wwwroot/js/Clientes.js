@@ -1,12 +1,12 @@
-﻿$(document).ready(function() {
-    $('#eventosTable').DataTable({
+﻿$(document).ready(function () {
+    $('#clientesTable').DataTable({
         "paging": true,
         "pageLength": 10
     });
 });
 
 function atualizarAtivo(eventoId, isAtivo) {
-    fetch(`/Eventos/UpdateAtivo/${eventoId}`, {
+    fetch(`/Clientes/UpdateAtivo/${eventoId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -22,8 +22,3 @@ function atualizarAtivo(eventoId, isAtivo) {
             console.error('Erro:', error);
         });
 }
-
-//$(document).ready(function () {
-//    $('#valorIngresso').mask('000000000.00', { reverse: true });
-//});
-
