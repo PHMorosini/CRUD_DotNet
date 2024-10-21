@@ -40,13 +40,9 @@ namespace CRUD_DotNet.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Evento evento, string valorIngresso)
+        public IActionResult Create(Evento evento)
         {
 
-            if (!Decimal.TryParse(valorIngresso, NumberStyles.Currency, CultureInfo.GetCultureInfo("pt-BR"), out decimal Preco))
-            {
-                ModelState.AddModelError("valorIngresso", "O valor do ingresso não é valido ");
-            }
             if (ModelState.IsValid)
             {
                 
@@ -73,15 +69,12 @@ namespace CRUD_DotNet.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int id,Evento evento, string valorIngresso)
+        public IActionResult Update(int id,Evento evento)
         {
-            if (!Decimal.TryParse(valorIngresso, out decimal Preco))
-            {
-                ModelState.AddModelError("valorIngresso", "O valor do ingresso não é valido ");
-            }
+            
             if (ModelState.IsValid)
             {
-                evento.ValorIngresso = Preco;
+               
                 _context.Update(evento); ;
                 _context.SaveChanges();
                 return RedirectToAction("Index");

@@ -44,10 +44,9 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="ValorIngresso" class="control-label"></label>
-        <input asp-for="ValorIngresso" class="form-control" />
-        <span asp-validation-for="ValorIngresso" class="text-danger"></span>
-    </div>
+    <label asp-for="ValorIngresso" class="control-label"></label>
+    <input asp-for="ValorIngresso" class="form-control" id="valorIngresso" placeholder="Digite o valor do ingresso" />
+</div>
     <div class="form-group">
         <input type="submit" value="Criar" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary">Retornar ao list</a>
@@ -56,6 +55,8 @@
 
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Eventos.js"></script>
 
 @section Scripts {
     @{

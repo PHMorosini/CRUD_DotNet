@@ -21,8 +21,8 @@ namespace CRUD_DotNet.Models
         [Required]
         public string EstadoSigla { get; set; }
         [DisplayName("Valor do ingresso")]
-        //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
-        public decimal ValorIngresso { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public string ValorIngresso { get; set; }
         public bool Ativo { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 
