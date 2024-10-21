@@ -3,6 +3,7 @@ using CRUD_DotNet.Models;
 using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace CRUD_DotNet.Controllers
 {
@@ -41,6 +42,7 @@ namespace CRUD_DotNet.Controllers
         [HttpPost]
         public IActionResult Create(Evento evento)
         {
+
             if (ModelState.IsValid)
             {
                 
@@ -49,6 +51,34 @@ namespace CRUD_DotNet.Controllers
                 return RedirectToAction("Index");
             }
 
+            return View(evento);
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
+
+            var evento = _context.Eventos.Find(id);
+            if (evento == null)
+            {
+                return NotFound();
+            }
+            return View(evento);
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id,Evento evento)
+        {
+            
+            if (ModelState.IsValid)
+            {
+               
+                _context.Update(evento); ;
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View(evento);
         }
 

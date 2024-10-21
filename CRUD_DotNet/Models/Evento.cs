@@ -9,6 +9,8 @@ namespace CRUD_DotNet.Models
         [Key]
         public int Id { get; set; }
         [Required]
+        [StringLength(60,MinimumLength = 3, ErrorMessage =
+            "O Nome do Evento deve ter no mínimo 3 e no máximo 60 caracteres.")]
         public string Nome { get; set; }
         [Required]
         public string Endereco { get; set; }
@@ -19,7 +21,8 @@ namespace CRUD_DotNet.Models
         [Required]
         public string EstadoSigla { get; set; }
         [DisplayName("Valor do ingresso")]
-        public decimal ValorIngresso { get; set; }
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public string ValorIngresso { get; set; }
         public bool Ativo { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 

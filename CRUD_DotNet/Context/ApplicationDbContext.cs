@@ -21,6 +21,10 @@ namespace CRUD_DotNet.Context
                 .Property(e => e.Ativo)
                 .HasDefaultValue(true);
 
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.Ativo)
+                .HasDefaultValue(true);
+
             base.OnModelCreating(modelBuilder);
         }
     }
