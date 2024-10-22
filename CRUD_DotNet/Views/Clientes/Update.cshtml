@@ -9,47 +9,80 @@
 
 <form asp-action="Update" asp-route-id="@Model.Id" method="post">
     <input type="hidden" asp-for="Id" />
-
-    <div class="form-group">
-        <label asp-for="Nome" class="control-label"></label>
-        <input asp-for="Nome" class="form-control" />
-        <span asp-validation-for="Nome" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Cpf" class="control-label"></label>
+                <input asp-for="Cpf" class="form-control" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Endereco" class="control-label"></label>
-        <input asp-for="Endereco" class="form-control" />
-        <span asp-validation-for="Endereco" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="DataNascimento">Data de Nascimento</label>
+                <input asp-for="DataNascimento" type="date" class="form-control" id="DataNascimento" name="DataNascimento" required>
+                <span asp-validation-for="DataNascimento" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Endereco" class="control-label"></label>
+                <input asp-for="Endereco" class="form-control" />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Rua" class="control-label"></label>
-        <input asp-for="Rua" class="form-control"/>
-        <span asp-validation-for="Rua" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Rua" class="control-label"></label>
+                <input asp-for="Rua" class="form-control" />
+                <span asp-validation-for="Rua" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Bairro" class="control-label"></label>
+                <input asp-for="Bairro" class="form-control" />
+                <span asp-validation-for="Bairro" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Bairro" class="control-label"></label>
-        <input asp-for="Bairro" class="form-control" />
-        <span asp-validation-for="Bairro" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Cidade" class="control-label"></label>
-        <input asp-for="Cidade" class="form-control" />
-        <span asp-validation-for="Cidade" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Estado:</label>
-        <select id="EstadoSigla" asp-for="EstadoSigla" name="EstadoSigla" class="form-control">
-            <option value="" >-- Selecione um Estado --</option>
-            @if (estadosViewBag != null)
-            {
-                foreach (var estado in estadosViewBag)
-                {
-                    <option value="@estado.Sigla">@estado.Nome</option>
-                }
-            }
-        </select>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Cidade" class="control-label"></label>
+                <input asp-for="Cidade" class="form-control" />
+                <span asp-validation-for="Cidade" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Estado:</label>
+                <select id="EstadoSigla" name="EstadoSigla" class="form-control" asp-for="EstadoSigla">
+                    <option value="">-- Selecione um Estado --</option>
+                    @if (estadosViewBag != null)
+                    {
+                        foreach (var estado in estadosViewBag)
+                        {
+                            <option value="@estado.Sigla">@estado.Nome</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
@@ -57,6 +90,9 @@
         <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Clientes.js"></script>
 
 @section Scripts {
     @{

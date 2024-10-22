@@ -3,6 +3,12 @@
         "paging": true,
         "pageLength": 10
     });
+    $('#Cpf').on('input', function () {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    $('#DataNascimento').on('keydown', function (e) {
+        e.preventDefault();
+    });
 });
 
 function atualizarAtivo(eventoId, isAtivo) {
