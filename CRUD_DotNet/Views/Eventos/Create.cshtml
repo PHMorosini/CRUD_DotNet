@@ -46,8 +46,8 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label>Estado:</label>
-                <select id="EstadoSigla" name="EstadoSigla" class="form-control">
-                    <option value="">-- Selecione um Estado --</option>
+                <select id="EstadoSigla" name="EstadoSigla" class="form-control" placeholder="">
+                    <option value="" disabled selected>-- Selecione um Estado --</option>
                     @if (estadosViewBag != null)
                     {
                         foreach (var estado in estadosViewBag)

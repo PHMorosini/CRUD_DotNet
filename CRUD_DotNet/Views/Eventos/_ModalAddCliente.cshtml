@@ -1,0 +1,29 @@
+﻿<!-- Modal para adicionar cliente -->
+<div class="modal fade" id="addClienteModal" tabindex="-1" aria-labelledby="addClienteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addClienteModalLabel">Adicionar Cliente ao Evento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    <input type="hidden" name="eventoId" id="eventoId" value="@ViewBag.EventoId" />
+
+                    <div class="mb-3">
+                        <label for="clienteId" class="form-label">Selecione o Cliente</label>
+                        <select class="form-select" name="clienteId" id="clienteId" placeholder="Selecione um cliente" required>
+                            @foreach (var cliente in ViewBag.ClientesDisponiveis)
+                            {
+                                <option value="@cliente.Id">@cliente.Nome</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="btnAdicionarCliente">Adicionar Cliente</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
