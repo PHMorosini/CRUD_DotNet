@@ -4,6 +4,7 @@ using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRUD_DotNet.Controllers
 {
@@ -57,10 +58,24 @@ namespace CRUD_DotNet.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
+            var estadosViewBag = ViewBag.Estados as IEnumerable<CRUD_DotNet.Models.Estado>;
+
+            var evento = _context.Eventos.Include(e => e.Clientes)
+                .FirstOrDefault(e => e.Id == id);
+
+
+            var clientesDisponiveis = _context.Clientes
+                .Where(c => !evento.Clientes.Contains(c))
+                .Where(c => c.Ativo == true)
+                .ToList();
+
+
+            ViewBag.ClientesDisponiveis = clientesDisponiveis;
             var estados = _estadoServices.GetEstados();
             ViewBag.Estados = estados;
 
-            var evento = _context.Eventos.Find(id);
+            ViewBag.EventoId = id;
+            
             if (evento == null)
             {
                 return NotFound();
@@ -71,7 +86,16 @@ namespace CRUD_DotNet.Controllers
         [HttpPost]
         public IActionResult Update(int id,Evento evento)
         {
-            
+            var clientesDisponiveis = _context.Clientes
+                .Where(c => !evento.Clientes.Contains(c))
+                .Where(c => c.Ativo == true)
+                .ToList();
+
+            ViewBag.ClientesDisponiveis = clientesDisponiveis;
+            var estados = _estadoServices.GetEstados();
+            ViewBag.Estados = estados;
+            ViewBag.EventoId = id;
+
             if (ModelState.IsValid)
             {
                
@@ -81,6 +105,88 @@ namespace CRUD_DotNet.Controllers
             }
             return View(evento);
         }
+
+        [HttpPost]
+        public JsonResult AdicionarClienteEvento(int eventoId, int clienteId)
+        {
+            var evento = _context.Eventos.Include(c => c.Clientes).FirstOrDefault(e => e.Id == eventoId);
+            var cliente = _context.Clientes.Find(clienteId);
+
+            if (cliente == null)
+            {
+                return Json(new { success = false, mensagem = "Cliente não encontrado." });
+            }
+
+            if (!evento.Clientes.Any(c => c.Id == cliente.Id))
+            {
+                evento.Clientes.Add(cliente);
+                _context.Update(evento);
+                _context.SaveChanges();
+
+                return Json(new { success = true, mensagem = "Cliente adicionado ao evento com sucesso.", redirectUrl = Url.Action("Update", new { id = eventoId }) });
+                
+            }
+            else
+            {
+                return Json(new { success = false, mensagem = "Cliente já está adicionado a este evento." });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RemoverClienteEvento(int eventoId, int clienteId)
+        {
+            var cliente = _context.Clientes.Find(clienteId);
+            var evento = _context.Eventos
+                .Include(c => c.Clientes)
+                .FirstOrDefault(e => e.Id == eventoId);
+
+            if (cliente == null)
+            {
+                return Json(new { success = false, mensagem = "Cliente não encontrado." });
+            }
+
+            if (evento == null)
+            {
+                return Json(new { success = false, mensagem = "Evento não encontrado." });
+            }
+
+            if (evento.Clientes.Contains(cliente)) 
+            {
+                evento.Clientes.Remove(cliente);
+                _context.SaveChanges(); 
+                return Json(new { success = true, mensagem = "Cliente removido com sucesso.", redirectUrl = Url.Action("Update", new { id = eventoId }) });
+            }
+            else
+            {
+                return Json(new { success = false, mensagem = "Cliente não está associado a este evento." });
+            }
+        }
+
+
+        //[HttpPost] 
+        //public  IActionResult RemoverClienteEvento(int eventoId, int clienteId)
+        //{
+        //    var cliente = _context.Clientes.Find(clienteId);
+        //    var evento = _context.Eventos
+        //        .Include(c => c.Clientes)
+        //        .FirstOrDefault(e => e.Id == eventoId);
+
+        //    if (evento.Clientes.Contains(cliente)) // Verifica se o cliente está na lista
+        //    {
+        //        evento.Clientes.Remove(cliente); // Remove o cliente
+        //        _context.SaveChanges(); // Salva as alterações
+        //        return RedirectToAction("Update", new { id = eventoId });
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"Cliente {cliente.Id} não encontrado na lista de clientes do evento {eventoId}.");
+        //    }
+
+        //    return NotFound();
+        //}
+
+
+
 
         [HttpPost]
         public IActionResult UpdateAtivo(int id, [FromBody] AtivoViewModel model)

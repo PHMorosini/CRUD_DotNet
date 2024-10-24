@@ -3,6 +3,7 @@ using CRUD_DotNet.Models;
 using CRUD_DotNet.Services.Interfaces;
 using CRUD_DotNet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static CRUD_DotNet.Controllers.EventosController;
 
 namespace CRUD_DotNet.Controllers
@@ -59,11 +60,19 @@ namespace CRUD_DotNet.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
+            ViewBag.ClienteId = id;
             IEnumerable<Estado> estados;
             estados = _estadoServices.GetEstados();
             ViewBag.Estados = estados;
 
-            var cliente = _context.Clientes.Find(id);
+            var cliente = _context.Clientes.Include(e => e.Eventos).FirstOrDefault(c => c.Id == id);
+
+            var eventosDisponveis = _context.Eventos
+                .Where(e => !cliente.Eventos.Contains(e))
+                .Where(e => e.Ativo == true)
+                .ToList();
+
+            ViewBag.EventosDisponiveis = eventosDisponveis;
             if (cliente == null)
             {
                 return NotFound();
@@ -74,6 +83,14 @@ namespace CRUD_DotNet.Controllers
         [HttpPost]
         public IActionResult Update(int id, Cliente cliente)
         {
+            ViewBag.ClienteId = id;
+            var eventosDisponveis = _context.Eventos
+                .Where(e => !cliente.Eventos.Contains(e))
+                .Where(e => e.Ativo == true)
+                .ToList();
+
+            ViewBag.EventosDisponiveis = eventosDisponveis;
+
             if (ModelState.IsValid)
             {
                 _context.Update(cliente);
@@ -83,6 +100,32 @@ namespace CRUD_DotNet.Controllers
             return View(cliente);
         }
 
+
+        [HttpPost]
+        public JsonResult AdicionarEventoCliente(int clienteId, int eventoId)
+        {
+            var cliente = _context.Clientes.Include(c => c.Eventos).FirstOrDefault(c => c.Id == clienteId);
+            var evento = _context.Eventos.Find(eventoId);
+
+            if (evento == null)
+            {
+                return Json(new { success = false, mensagem = "Evento não encontrado." });
+            }
+
+            if (!cliente.Eventos.Any(e => e.Id == evento.Id)) 
+            {
+                cliente.Eventos.Add(evento);
+                _context.Update(cliente);
+                _context.SaveChanges();
+
+                return Json(new { success = true, mensagem = "Cliente adicionado ao evento com sucesso.", redirectUrl = Url.Action("Update", new { id = clienteId }) });
+
+            }
+            else
+            {
+                return Json(new { success = false, mensagem = "Cliente já está adicionado a este evento." });
+            }
+        }
         [HttpPost]
         public IActionResult UpdateAtivo(int id, [FromBody] AtivoViewModel model)
         {

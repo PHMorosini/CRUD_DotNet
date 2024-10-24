@@ -1,5 +1,5 @@
 ﻿@model Cliente
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 @{
     ViewData["Title"] = "Atualizar Cliente";
     var estadosViewBag = ViewBag.Estados as IEnumerable<CRUD_DotNet.Models.Estado>;
@@ -9,54 +9,123 @@
 
 <form asp-action="Update" asp-route-id="@Model.Id" method="post">
     <input type="hidden" asp-for="Id" />
-
-    <div class="form-group">
-        <label asp-for="Nome" class="control-label"></label>
-        <input asp-for="Nome" class="form-control" />
-        <span asp-validation-for="Nome" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Cpf" class="control-label"></label>
+                <input asp-for="Cpf" class="form-control" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Endereco" class="control-label"></label>
-        <input asp-for="Endereco" class="form-control" />
-        <span asp-validation-for="Endereco" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="DataNascimento">Data de Nascimento</label>
+                <input asp-for="DataNascimento" type="date" class="form-control" id="DataNascimento" name="DataNascimento" required>
+                <span asp-validation-for="DataNascimento" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Endereco" class="control-label"></label>
+                <input asp-for="Endereco" class="form-control" />
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Rua" class="control-label"></label>
-        <input asp-for="Rua" class="form-control"/>
-        <span asp-validation-for="Rua" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Rua" class="control-label"></label>
+                <input asp-for="Rua" class="form-control" />
+                <span asp-validation-for="Rua" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Bairro" class="control-label"></label>
+                <input asp-for="Bairro" class="form-control" />
+                <span asp-validation-for="Bairro" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Bairro" class="control-label"></label>
-        <input asp-for="Bairro" class="form-control" />
-        <span asp-validation-for="Bairro" class="text-danger"></span>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label asp-for="Cidade" class="control-label"></label>
+                <input asp-for="Cidade" class="form-control" />
+                <span asp-validation-for="Cidade" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+                <label>Estado:</label>
+                <select id="EstadoSigla" name="EstadoSigla" class="form-control" asp-for="EstadoSigla">
+                    <option value="" disabled selected>-- Selecione um Estado --</option>
+                    @if (estadosViewBag != null)
+                    {
+                        foreach (var estado in estadosViewBag)
+                        {
+                            <option value="@estado.Sigla">@estado.Nome</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
     </div>
+
+    <hr size="6"></hr>
     <div class="form-group">
-        <label asp-for="Cidade" class="control-label"></label>
-        <input asp-for="Cidade" class="form-control" />
-        <span asp-validation-for="Cidade" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label>Estado:</label>
-        <select id="EstadoSigla" asp-for="EstadoSigla" name="EstadoSigla" class="form-control">
-            <option value="" >-- Selecione um Estado --</option>
-            @if (estadosViewBag != null)
+        <H3>Cliente cadastrado nos eventos:</H3>
+        <table id="eventosTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Endereço</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var evento in Model.Eventos)
             {
-                foreach (var estado in estadosViewBag)
-                {
-                    <option value="@estado.Sigla">@estado.Nome</option>
-                }
+                <tr>
+                    <td>@evento.Id</td>
+                    <td>@evento.Nome</td>
+                    <td>@evento.Endereco</td>
+                    <td>@evento.Cidade</td>
+                    <td>@evento.EstadoSigla</td>
+                </tr>
             }
-        </select>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventoModal">
+            Adicionar Evento
+        </button>
+        @Html.Partial("_ModalAddEvento")
     </div>
-
     <div class="form-group">
         <input type="submit" value="Atualizar" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary">Voltar à Lista</a>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/Clientes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 @section Scripts {
     @{
