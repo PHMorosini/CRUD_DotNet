@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <hr size="6"></hr>
+    <hr></hr>
     <div class="form-group">
         <H3>Clientes cadastrados no evento:</H3>
         <table id="clientesTable" class="table table-striped">
@@ -80,6 +80,7 @@
                 <th>Endereço</th>
                 <th>Cidade</th>
                 <th>Estado</th>
+                <th>Excluir</th>
             </tr>
             </thead>
             <tbody>
@@ -91,6 +92,14 @@
                     <td>@cliente.Endereco</td>
                     <td>@cliente.Cidade</td>
                     <td>@cliente.EstadoSigla</td>
+                    <td>
+                            <input type="hidden" name="clienteId" value="@cliente.Id" />
+                            <input type="hidden" name="eventoId" value="@Model.Id" />
+                            <button id="btnRemoverCliente" onclick="removerClienteEvento('@cliente.Id', '@Model.Id')">
+                                <i class="fa-solid fa-user-slash"></i>
+                            </button>
+                    </td>
+
                 </tr>
             }
             </tbody>
@@ -102,13 +111,13 @@
     </div>
     <div class="form-group">
         <input type="submit" value="Salvar" class="btn btn-primary" />
-        <a asp-action="Index" class="btn btn-secondary">Retornar ao list</a>
+        <a asp-action="Index" class="btn btn-secondary">Retornar a listagem</a>
     </div>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="~/js/Eventos.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 
 
 

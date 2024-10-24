@@ -12,9 +12,16 @@
                     <div class="mb-3">
                         <label for="clienteId" class="form-label">Selecione o Cliente</label>
                         <select class="form-select" name="clienteId" id="clienteId" placeholder="Selecione um cliente" required>
-                            @foreach (var cliente in ViewBag.ClientesDisponiveis)
+                            @if (ViewBag.ClientesDisponiveis.Count > 0)
                             {
-                                <option value="@cliente.Id">@cliente.Nome</option>
+                                @foreach (var cliente in ViewBag.ClientesDisponiveis)
+                                {
+                                    <option value="@cliente.Id">@cliente.Nome</option>
+                                }
+                            }
+                            else
+                            {
+                                <option value="" disabled selected>-- Nenhum Cliente apto ou ativo --</option>
                             }
                         </select>
                     </div>
