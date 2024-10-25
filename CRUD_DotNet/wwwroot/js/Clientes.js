@@ -38,7 +38,10 @@
             }
         }); 
     }); 
-    
+    $('#ehEstudante').change(function () {
+        $(this).val(this.checked ? "true" : "false");
+    });
+     
 });
 
 function atualizarAtivo(eventoId, isAtivo) {

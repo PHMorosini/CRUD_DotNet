@@ -1,5 +1,5 @@
 ﻿@model Cliente
-
+<link rel="stylesheet" href="~/css/Cliente.css">
 @{
     ViewData["Title"] = "Create Cliente";
     var estadosViewBag = ViewBag.Estados as IEnumerable<CRUD_DotNet.Models.Estado>;
@@ -81,6 +81,18 @@
                     }
                 </select>
             </div>
+        </div>
+    </div>
+    <hr></hr>
+    <h3>Informações adicionais:</h3>
+    <div class="row">
+        <div class="col-md-4 col-sm-6">
+            <input type="hidden" name="EhEstudante"/>
+            <label class="switch">
+                <input type="checkbox" id="ehEstudante" name="EhEstudante">
+                <span class="slider"></span>
+            </label>
+            <label for="ehEstudante">Estudante?</label>
         </div>
     </div>
 
