@@ -30,6 +30,11 @@ namespace CRUD_DotNet.Context
                 .HasColumnName("Estudante")
                 .HasDefaultValue(false)
                 ;
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.DoaSangue)
+                .HasColumnName("DoadorDeSangue")
+                .HasDefaultValue(false)
+                ;
 
             base.OnModelCreating(modelBuilder);
         }
