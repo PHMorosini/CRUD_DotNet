@@ -59,17 +59,30 @@
             </div>
         </div>
     </div>
-
+    <hr>
+    <h3>Valores dos ingressos:</h3>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label asp-for="ValorIngresso" class="control-label"></label>
-                <input asp-for="ValorIngresso" class="form-control" id="valorIngresso" placeholder="Digite o valor do ingresso" />
+                <input asp-for="ValorIngresso" class="form-control" id="valorIngresso" placeholder="Digite o valor do ingresso comum" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="ValorMeioIngresso" class="control-label"></label>
+                <input asp-for="ValorMeioIngresso" class="form-control" id="ValorMeioIngresso" placeholder="Digite o valor do meio-ingresso" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="ValorTerceiraIdade" class="control-label"></label>
+                <input asp-for="ValorTerceiraIdade" class="form-control" id="ValorTerceiraIdade" placeholder="Digite o valor do ingresso para idosos" />
             </div>
         </div>
     </div>
 
-    <hr></hr>
+    <hr>
     <div class="form-group">
         <H3>Clientes cadastrados no evento:</H3>
         <table id="clientesTable" class="table table-striped">
