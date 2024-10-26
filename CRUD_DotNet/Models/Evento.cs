@@ -27,6 +27,10 @@ namespace CRUD_DotNet.Models
         [DisplayName("Valor da meia entrada")]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public string ValorMeioIngresso { get; set; }
+        [Required]
+        [StringLength(3,MinimumLength = 1,ErrorMessage="A quantidade maxima de participantes deve ser informada.")]
+        [DisplayName("Quantidade maxima de participantes:")]
+        public string QuantidadeMaxParticipantantes { get; set; }
 
         [DisplayName("Valor do ingresso para idosos")]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]

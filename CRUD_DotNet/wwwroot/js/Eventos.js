@@ -127,7 +127,11 @@ $(document).ready(function () {
             }
         });
     });
-
+    $('#QuantidadeMaxParticipantantes').on('input', function () {
+        let valor = $(this).val();
+        valor = valor.replace(/[^0-9]/g, '');
+        $(this).val(valor);
+    });
     $('#btnRemoverCliente').click(function () {
         removerClienteEvento(); // A função já está disponível globalmente
     });

@@ -135,7 +135,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach (var evento in Model.Eventos)
+            @foreach (var evento in Model.Eventos.Where(e => e.Ativo == true))
             {
                 <tr>
                     <td>@evento.Id</td>
