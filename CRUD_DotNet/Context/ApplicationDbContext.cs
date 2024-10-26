@@ -35,6 +35,9 @@ namespace CRUD_DotNet.Context
                 .HasColumnName("DoadorDeSangue")
                 .HasDefaultValue(false)
                 ;
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.CriadoEm)
+                .HasDefaultValueSql("GETDATE()");
 
             base.OnModelCreating(modelBuilder);
         }

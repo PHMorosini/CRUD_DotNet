@@ -51,6 +51,7 @@ namespace CRUD_DotNet.Models
         public bool DoaSangue { get; set; }
 
         public bool Ativo { get; set; }
+        public DateOnly? CriadoEm {get; set; }
         //-----------------------------------------------------------------------------------
         
         public virtual ICollection<Evento> Eventos { get; set; } = new List<Evento>();
