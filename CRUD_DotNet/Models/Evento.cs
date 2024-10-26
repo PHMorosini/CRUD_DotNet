@@ -23,6 +23,14 @@ namespace CRUD_DotNet.Models
         [DisplayName("Valor do ingresso")]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public string ValorIngresso { get; set; }
+
+        [DisplayName("Valor da meia entrada")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public string ValorMeioIngresso { get; set; }
+
+        [DisplayName("Valor do ingresso para idosos")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public string ValorTerceiraIdade { get; set; }
         public bool Ativo { get; set; }
         public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 

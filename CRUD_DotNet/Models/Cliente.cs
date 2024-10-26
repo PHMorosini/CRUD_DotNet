@@ -44,9 +44,15 @@ namespace CRUD_DotNet.Models
             "O Nome do Cidade deve ter no mínimo 3 e no máximo 60 caracteres.")]
         [Required(ErrorMessage = "É necessario inserir a cidade do cliente")]
         public string Cidade {get; set; }
-
+        //-----------------------------------------------------------------------------------
+        [Required] 
+        public bool EhEstudante { get; set; }
+        //-----------------------------------------------------------------------------------
+        public bool DoaSangue { get; set; }
 
         public bool Ativo { get; set; }
+        //-----------------------------------------------------------------------------------
+        
         public virtual ICollection<Evento> Eventos { get; set; } = new List<Evento>();
         public Cliente(string nome, string endereco, string rua, string bairro, string cidade)
         {
