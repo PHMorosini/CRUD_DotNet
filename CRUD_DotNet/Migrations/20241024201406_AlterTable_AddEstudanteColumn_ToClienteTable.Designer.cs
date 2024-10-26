@@ -4,6 +4,7 @@ using CRUD_DotNet.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUD_DotNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241024201406_AlterTable_AddEstudanteColumn_ToClienteTable")]
+    partial class AlterTable_AddEstudanteColumn_ToClienteTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,12 +55,6 @@ namespace CRUD_DotNet.Migrations
 
                     b.Property<DateOnly>("DataNascimento")
                         .HasColumnType("date");
-
-                    b.Property<bool>("DoaSangue")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("DoadorDeSangue");
 
                     b.Property<bool>("EhEstudante")
                         .ValueGeneratedOnAdd()
@@ -151,14 +148,6 @@ namespace CRUD_DotNet.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("ValorIngresso")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ValorMeioIngresso")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ValorTerceiraIdade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

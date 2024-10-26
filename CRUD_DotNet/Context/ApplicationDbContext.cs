@@ -23,7 +23,18 @@ namespace CRUD_DotNet.Context
 
             modelBuilder.Entity<Cliente>()
                 .Property(c => c.Ativo)
-                .HasDefaultValue(true);
+                .HasDefaultValue(true)
+                ;
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.EhEstudante)
+                .HasColumnName("Estudante")
+                .HasDefaultValue(false)
+                ;
+            modelBuilder.Entity<Cliente>()
+                .Property(c => c.DoaSangue)
+                .HasColumnName("DoadorDeSangue")
+                .HasDefaultValue(false)
+                ;
 
             base.OnModelCreating(modelBuilder);
         }

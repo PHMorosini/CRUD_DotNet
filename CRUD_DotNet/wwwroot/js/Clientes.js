@@ -28,9 +28,7 @@
             success: function (response) {
                 if (response.success) {
                     alert(response.mensagem);
-                    if (response.redirectUrl) {
-                        window.location.href = response.redirectUrl;
-                    }
+                       window.location.href = response.redirectUrl;
                 }
             },
             error: function () {
@@ -38,6 +36,9 @@
             }
         }); 
     }); 
+    $('#ehEstudante').change(function () {
+        $(this).val(this.checked ? "true" : "false");
+    });
     
 });
 
