@@ -1,5 +1,5 @@
 ﻿@model Cliente
-<link rel="stylesheet" href="~/css/Cliente.css">
+
 @{
     ViewData["Title"] = "Create Cliente";
     var estadosViewBag = ViewBag.Estados as IEnumerable<CRUD_DotNet.Models.Estado>;
@@ -83,31 +83,7 @@
             </div>
         </div>
     </div>
-    <hr></hr>
-    <h3>Informações adicionais:</h3>
-    <div class="row">
-        <div class="col-md-2 col-sm-6">
-            <div class="form-group">
-                <label class="align-content-center">Estudante?</label>
-                <select id="EhEstudante" name="EhEstudante" class="form-control" asp-for="EhEstudante">
-                    <option value="" disabled selected>-- Informe um valor valido--</option>
-                    <option value="TRUE">SIM</option>
-                    <option value="false">NÃO</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6">
-            <div class="form-group">
-                <label class="align-content-center">Doador de sangue?</label>
-                <select id="DoaSangue" name="DoaSangue" class="form-control" asp-for="DoaSangue">
-                    <option value="" disabled selected>-- Informe um valor valido--</option>
-                    <option value="TRUE">SIM</option>
-                    <option value="false">NÃO</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <hr></hr>
+
     <div class="form-group">
         <input type="submit" value="Criar" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary">Retornar ao list</a>
