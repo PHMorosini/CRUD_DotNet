@@ -53,18 +53,6 @@ namespace CRUD_DotNet.Migrations
                     b.Property<DateOnly>("DataNascimento")
                         .HasColumnType("date");
 
-                    b.Property<bool>("DoaSangue")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("DoadorDeSangue");
-
-                    b.Property<bool>("EhEstudante")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("Estudante");
-
                     b.Property<string>("Endereco")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -151,14 +139,6 @@ namespace CRUD_DotNet.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<string>("ValorIngresso")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ValorMeioIngresso")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ValorTerceiraIdade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

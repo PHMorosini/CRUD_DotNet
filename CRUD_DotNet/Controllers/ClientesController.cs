@@ -47,10 +47,8 @@ namespace CRUD_DotNet.Controllers
         [HttpPost]
         public IActionResult Create(Cliente cliente)
         {
-
             if (ModelState.IsValid)
             {
-                
                 _context.Clientes.Add(cliente);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
